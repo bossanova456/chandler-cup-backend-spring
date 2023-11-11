@@ -1,0 +1,14 @@
+version: "2"
+
+services:
+  postgres:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: chandler-cup-backend
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      PGDATA: /database
+    volumes:
+      - "../ddl/:/docker-entrypoint-initdb.d/"
