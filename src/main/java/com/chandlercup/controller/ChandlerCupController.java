@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChandlerCupController {
     private final MatchupService matchupService;
 
+    public ChandlerCupController(MatchupService matchupService) {
+        this.matchupService = matchupService;
+    }
+
     @PostMapping("/matchups")
     public ResponseEntity<Matchup> addMatchup(Matchup matchup) {
         return ResponseEntity.ok(matchupService.addMatchup(matchup));

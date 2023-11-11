@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
-@NoArgsConstructor
 @Slf4j
 public class MatchupService {
-    private MatchupRepository matchupRepository;
+    private final MatchupRepository matchupRepository;
+
+    public MatchupService(MatchupRepository matchupRepository) { this.matchupRepository = matchupRepository; }
 
     public Matchup addMatchup(Matchup matchup) {
         return matchupRepository.save(matchup);
