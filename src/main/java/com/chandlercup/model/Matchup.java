@@ -1,12 +1,8 @@
 package com.chandlercup.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -15,17 +11,21 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Getter
+@Setter
 @Table(name = "matchups")
 public class Matchup {
     @Id
-    private String matchupId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long matchupId;
     private String matchupWeek;
-    private String favoredTeamId;
-    private String underdogTeamId;
+    private Long favoredTeamId;
+    private Long underdogTeamId;
     private Double matchupLine;
     private LocalDateTime matchupStart;
     private Integer favoredTeamScore;
     private Integer underdogTeamScore;
+    @UpdateTimestamp
     private LocalDateTime lastUpdated;
     private boolean isFinal;
 

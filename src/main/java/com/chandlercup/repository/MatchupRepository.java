@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MatchupRepository extends JpaRepository<Matchup, String> {
+public interface MatchupRepository extends JpaRepository<Matchup, Long> {
     List<Matchup> findMatchupsByMatchupWeek(String week);
 }

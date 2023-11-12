@@ -1,8 +1,6 @@
 package com.chandlercup.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +16,7 @@ import java.math.BigInteger;
 @Table(name = "roles")
 public class Role {
     @Id
-    private BigInteger roleId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long roleId;
     private String description;
 }

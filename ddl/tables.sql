@@ -1,10 +1,10 @@
 CREATE TABLE roles (
-    role_id BIGINT PRIMARY KEY NOT NULL,
+    role_id SERIAL PRIMARY KEY NOT NULL,
     description TEXT NOT NULL
 );
 
 CREATE TABLE users (
-    user_id TEXT PRIMARY KEY NOT NULL,
+    user_id SERIAL PRIMARY KEY NOT NULL,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     role_id BIGINT NOT NULL,
@@ -13,13 +13,13 @@ CREATE TABLE users (
 );
 
 CREATE TABLE teams (
-    team_id BIGINT PRIMARY KEY NOT NULL,
+    team_id SERIAL PRIMARY KEY NOT NULL,
     team_name TEXT NOT NULL,
     team_region TEXT NOT NULL
 );
 
 CREATE TABLE matchups (
-    matchup_id BIGINT PRIMARY KEY NOT NULL,
+    matchup_id SERIAL PRIMARY KEY NOT NULL,
     matchup_week TEXT NOT NULL,
     favored_team_id BIGINT NOT NULL,
     underdog_team_id BIGINT NOT NULL,
@@ -36,12 +36,12 @@ CREATE TABLE matchups (
 );
 
 CREATE TABLE seasons (
-    season_id BIGINT PRIMARY KEY NOT NULL,
+    season_id SERIAL PRIMARY KEY NOT NULL,
     season_year BIGINT NOT NULL
 );
 
 CREATE TABLE scores (
-    score_id BIGINT PRIMARY KEY NOT NULL,
+    score_id SERIAL PRIMARY KEY NOT NULL,
     user_id TEXT NOT NULL,
     season_id BIGINT NOT NULL,
     wins INT NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE scores (
 );
 
 CREATE TABLE picks (
-    pick_id BIGINT PRIMARY KEY NOT NULL,
+    pick_id SERIAL PRIMARY KEY NOT NULL,
     user_id TEXT NOT NULL,
     matchup_id BIGINT NOT NULL,
     pick_team_id BIGINT NOT NULL,

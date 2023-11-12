@@ -1,24 +1,23 @@
 package com.chandlercup.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+import org.springframework.boot.jackson.JsonComponent;
+
+import java.io.Serializable;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@JsonComponent
 @Table(name = "teams")
-public class Team {
+public class Team implements Serializable {
     @Id
     @Column(name = "team_id")
-    private String teamId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long teamId;
     private String teamName;
     private String teamRegion;
 }

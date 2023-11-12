@@ -14,13 +14,15 @@ import java.util.List;
 public class MatchupService {
     private final MatchupRepository matchupRepository;
 
-    public MatchupService(MatchupRepository matchupRepository) { this.matchupRepository = matchupRepository; }
+    public MatchupService(MatchupRepository matchupRepository) {
+        this.matchupRepository = matchupRepository;
+    }
 
     public Matchup addMatchup(Matchup matchup) {
         return matchupRepository.save(matchup);
     }
 
-    public Matchup getMatchup(String matchupId) {
+    public Matchup getMatchup(Long matchupId) {
         return matchupRepository.findById(matchupId).orElse(null);
     }
 
