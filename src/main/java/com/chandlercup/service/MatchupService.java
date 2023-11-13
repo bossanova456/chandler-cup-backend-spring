@@ -24,8 +24,22 @@ public class MatchupService {
     private final MatchupRepository matchupRepository;
     private final TeamRepository teamRepository;
 
-    public Matchup addMatchup(Matchup matchup) {
-        return matchupRepository.save(matchup);
+    public Matchup addMatchup(MatchupDTO matchupDto) {
+        return matchupRepository.save(
+            Matchup.builder()
+                .matchupLine(matchupDto.getMatchupLine())
+                .matchupStart(matchupDto.getMatchupStart())
+                .matchupWeek(matchupDto.getMatchupWeek())
+                .favoredTeam(
+                        teamRepository.findById(matchupDto.getFavoredTeamId())
+                                .orElseThrow(() -> new TeamNotFoundException("Could not find favored team"))
+                )
+                .underdogTeam(
+                        teamRepository.findById(matchupDto.getUnderdogTeamId())
+                                .orElseThrow(() -> new TeamNotFoundException("Could not find underdog team"))
+                )
+                .build()
+        );
     }
 
     public Matchup getMatchup(Long matchupId) {

@@ -18,12 +18,12 @@ public class MatchupController {
     private final MatchupService matchupService;
 
     @PostMapping("")
-    public ResponseEntity<Matchup> addTeam(@RequestBody Matchup matchup) {
-        return ResponseEntity.ok(matchupService.addMatchup(matchup));
+    public ResponseEntity<Matchup> addMatchup(@RequestBody MatchupDTO matchupDto) {
+        return ResponseEntity.ok(matchupService.addMatchup(matchupDto));
     }
 
     @GetMapping("/{matchupId}")
-    public ResponseEntity<Matchup> getTeam(@PathVariable Long matchupId) {
+    public ResponseEntity<Matchup> getMatchup(@PathVariable Long matchupId) {
         return ResponseEntity.ok(matchupService.getMatchup(matchupId));
     }
 
