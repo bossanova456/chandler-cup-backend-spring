@@ -21,7 +21,7 @@ public class TeamController {
     }
 
     @GetMapping("/{teamId}")
-    public ResponseEntity<Team> getTeam(@PathVariable Integer teamId) {
+    public ResponseEntity<Team> getTeam(@PathVariable Long teamId) {
         return ResponseEntity.ok(teamService.getTeam(teamId));
     }
 }
