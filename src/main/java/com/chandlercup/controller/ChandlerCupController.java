@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ChandlerCupController {
     private final MatchupService matchupService;
 
-    @PostMapping("/matchups")
-    public ResponseEntity<Matchup> addMatchup(@RequestBody Matchup matchup) {
-        return ResponseEntity.ok(matchupService.addMatchup(matchup));
-    }
-
-    @GetMapping("/matchups/{matchupId}")
-    public ResponseEntity<Matchup> getMatchup(@RequestParam Long matchupId) {
-        return ResponseEntity.ok(matchupService.getMatchup(matchupId));
-    }
+//    @PostMapping("/matchups")
+//    public ResponseEntity<Matchup> addMatchup(@RequestBody Matchup matchup) {
+//        return ResponseEntity.ok(matchupService.addMatchup(matchup));
+//    }
+//
+//    @GetMapping("/matchups/{matchupId}")
+//    public ResponseEntity<Matchup> getMatchup(@RequestParam Long matchupId) {
+//        return ResponseEntity.ok(matchupService.getMatchup(matchupId));
+//    }
 }

@@ -24,9 +24,9 @@ CREATE TABLE matchups (
     favored_team_id BIGINT NOT NULL,
     underdog_team_id BIGINT NOT NULL,
     matchup_line INT NOT NULL,
-    matchup_start TIMESTAMP NOT NULL,
     favored_team_score INT,
     underdog_team_score INT,
+    matchup_start TIMESTAMP NOT NULL,
     last_updated TIMESTAMP NOT NULL,
     is_final BOOLEAN NOT NULL,
     FOREIGN KEY (favored_team_id)

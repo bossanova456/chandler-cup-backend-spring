@@ -19,13 +19,16 @@ public class Matchup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long matchupId;
     private String matchupWeek;
-    private Long favoredTeamId;
-    private Long underdogTeamId;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "favored_team_id")
+    private Team favoredTeam;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "underdog_team_id")
+    private Team underdogTeam;
     private Double matchupLine;
-    private LocalDateTime matchupStart;
     private Integer favoredTeamScore;
     private Integer underdogTeamScore;
-    @UpdateTimestamp
+    private LocalDateTime matchupStart;
     private LocalDateTime lastUpdated;
     private boolean isFinal;
 
