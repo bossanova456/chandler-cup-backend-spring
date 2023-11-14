@@ -8,6 +8,7 @@ import com.chandlercup.model.Matchup;
 import com.chandlercup.model.Team;
 import com.chandlercup.repository.MatchupRepository;
 import com.chandlercup.repository.TeamRepository;
+import com.chandlercup.supplier.LocalDateTimeSupplier;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +21,14 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+
 public class MatchupService {
     private final MatchupRepository matchupRepository;
     private final TeamRepository teamRepository;
+    private final LocalDateTimeSupplier localDateTimeSupplier;
 
     public Matchup addMatchup(MatchupDTO matchupDto) {
-        return matchupRepository.save(
+        Matchup matchup =
             Matchup.builder()
                 .matchupLine(matchupDto.getMatchupLine())
                 .matchupStart(matchupDto.getMatchupStart())
@@ -38,8 +41,10 @@ public class MatchupService {
                         teamRepository.findById(matchupDto.getUnderdogTeamId())
                                 .orElseThrow(() -> new TeamNotFoundException("Could not find underdog team"))
                 )
-                .build()
-        );
+                .lastUpdated(localDateTimeSupplier.get())
+                .build();
+
+        return matchupRepository.save(matchup);
     }
 
     public Matchup getMatchup(Long matchupId) {
@@ -61,6 +66,7 @@ public class MatchupService {
         matchupToUpdate.setFavoredTeamScore(matchupDto.getFavoredTeamScore());
         matchupToUpdate.setUnderdogTeamScore(matchupDto.getUnderdogTeamScore());
         matchupToUpdate.setFinal(matchupDto.isFinal());
+        matchupToUpdate.setLastUpdated(localDateTimeSupplier.get());
 
         return matchupRepository.save(matchupToUpdate);
     }
@@ -71,6 +77,7 @@ public class MatchupService {
         matchupToUpdate.setFavoredTeamScore(matchupScoreDTO.getFavoredTeamScore());
         matchupToUpdate.setUnderdogTeamScore(matchupScoreDTO.getUnderdogTeamScore());
         matchupToUpdate.setFinal(matchupScoreDTO.isFinal());
+        matchupToUpdate.setLastUpdated(localDateTimeSupplier.get());
 
         return matchupRepository.save(matchupToUpdate);
     }
@@ -79,6 +86,7 @@ public class MatchupService {
         Matchup matchupToUpdate = matchupRepository.findById(matchupId).orElseThrow(() -> new MatchupNotFoundException("Could not find matchup with ID " + matchupId));
 
         matchupToUpdate.setFinal(isFinal);
+        matchupToUpdate.setLastUpdated(localDateTimeSupplier.get());
 
         return matchupRepository.save(matchupToUpdate);
     }

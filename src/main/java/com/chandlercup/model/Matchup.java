@@ -29,7 +29,6 @@ public class Matchup {
     private Integer favoredTeamScore;
     private Integer underdogTeamScore;
     private LocalDateTime matchupStart;
-    @UpdateTimestamp
     private LocalDateTime lastUpdated;
     private boolean isFinal;
 
