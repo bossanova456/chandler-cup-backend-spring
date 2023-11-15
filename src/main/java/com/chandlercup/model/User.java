@@ -19,7 +19,7 @@ public class User {
     private String firstName;
     private String lastName;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_name")
     private Role role;
 }
