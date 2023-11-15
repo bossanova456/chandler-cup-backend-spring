@@ -71,7 +71,7 @@ public class MatchupServiceTest {
             .builder()
             .matchupLine(1.5)
             .matchupStart(updateDateTime)
-            .matchupWeek("1")
+            .seasonWeek("1")
             .favoredTeamId(1L)
             .underdogTeamId(2L)
             .build();
@@ -89,7 +89,7 @@ public class MatchupServiceTest {
             .builder()
             .matchupLine(3.0)
             .matchupStart(updateDateTime)
-            .matchupWeek("1")
+            .seasonWeek("1")
             .favoredTeamId(1L)
             .underdogTeamId(2L)
             .favoredTeamScore(10)
@@ -99,7 +99,7 @@ public class MatchupServiceTest {
 
         expectedMatchup.setMatchupLine(3.0);
         expectedMatchup.setMatchupStart(updateDateTime);
-        expectedMatchup.setMatchupWeek("1");
+        expectedMatchup.setSeasonWeek("1");
         expectedMatchup.setFavoredTeam(favoredTeam);
         expectedMatchup.setUnderdogTeam(underdogTeam);
         expectedMatchup.setFavoredTeamScore(10);

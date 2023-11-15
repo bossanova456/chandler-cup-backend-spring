@@ -2,7 +2,6 @@ package com.chandlercup.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +17,8 @@ public class Matchup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long matchupId;
-    private String matchupWeek;
+    private String seasonYear;
+    private String seasonWeek;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "favored_team_id")
     private Team favoredTeam;

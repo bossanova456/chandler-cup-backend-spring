@@ -13,7 +13,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MatchupDTO {
     private Long matchupId;
-    private String matchupWeek;
+    private String seasonYear;
+    private String seasonWeek;
     private Long favoredTeamId;
     private Long underdogTeamId;
     private Double matchupLine;

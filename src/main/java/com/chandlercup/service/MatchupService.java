@@ -9,14 +9,9 @@ import com.chandlercup.model.Team;
 import com.chandlercup.repository.MatchupRepository;
 import com.chandlercup.repository.TeamRepository;
 import com.chandlercup.supplier.LocalDateTimeSupplier;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @Slf4j
@@ -32,7 +27,8 @@ public class MatchupService {
             Matchup.builder()
                 .matchupLine(matchupDto.getMatchupLine())
                 .matchupStart(matchupDto.getMatchupStart())
-                .matchupWeek(matchupDto.getMatchupWeek())
+                .seasonYear(matchupDto.getSeasonYear())
+                .seasonWeek(matchupDto.getSeasonWeek())
                 .favoredTeam(
                         teamRepository.findById(matchupDto.getFavoredTeamId())
                                 .orElseThrow(() -> new TeamNotFoundException("Could not find favored team"))
@@ -59,7 +55,8 @@ public class MatchupService {
 
         matchupToUpdate.setMatchupLine(matchupDto.getMatchupLine());
         matchupToUpdate.setMatchupStart(matchupDto.getMatchupStart());
-        matchupToUpdate.setMatchupWeek(matchupDto.getMatchupWeek());
+        matchupToUpdate.setSeasonYear(matchupDto.getSeasonYear());
+        matchupToUpdate.setSeasonWeek(matchupDto.getSeasonWeek());
         matchupToUpdate.setFavoredTeam(favoredTeam);
         matchupToUpdate.setUnderdogTeam(underdogTeam);
         matchupToUpdate.setMatchupLine(matchupDto.getMatchupLine());
@@ -74,12 +71,21 @@ public class MatchupService {
     public Matchup updateMatchupScore(Long matchupId, MatchupScoreDTO matchupScoreDTO) {
         Matchup matchupToUpdate = matchupRepository.findById(matchupId).orElseThrow(() -> new MatchupNotFoundException("Could not find matchup with ID " + matchupId));
 
-        matchupToUpdate.setFavoredTeamScore(matchupScoreDTO.getFavoredTeamScore());
-        matchupToUpdate.setUnderdogTeamScore(matchupScoreDTO.getUnderdogTeamScore());
-        matchupToUpdate.setFinal(matchupScoreDTO.isFinal());
-        matchupToUpdate.setLastUpdated(localDateTimeSupplier.get());
+        return updateMatchupScore(
+                matchupToUpdate,
+                matchupScoreDTO.getFavoredTeamScore(),
+                matchupScoreDTO.getUnderdogTeamScore(),
+                matchupScoreDTO.isFinal()
+        );
+    }
 
-        return matchupRepository.save(matchupToUpdate);
+    public Matchup updateMatchupScore(Matchup matchup, Integer favoredTeamScore, Integer underdogTeamScore, boolean isFinal) {
+        matchup.setFavoredTeamScore(favoredTeamScore);
+        matchup.setUnderdogTeamScore(underdogTeamScore);
+        matchup.setFinal(isFinal);
+        matchup.setLastUpdated(localDateTimeSupplier.get());
+
+        return matchupRepository.save(matchup);
     }
 
     public Matchup updateMatchupFinal(Long matchupId, boolean isFinal) {
