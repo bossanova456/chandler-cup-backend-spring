@@ -1,13 +1,12 @@
 package com.chandlercup.model;
 
-import com.chandlercup.supplier.LocalDateTimeSupplier;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 @Builder
@@ -30,5 +29,5 @@ public class Pick {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pick_team_id")
     private Team pickTeam;
-    private LocalDateTime lastUpdated;
+    private OffsetDateTime lastUpdated;
 }

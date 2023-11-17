@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 @Builder
@@ -25,5 +25,5 @@ public class WeeklyScore {
     private String seasonWeek;
     @Column(name = "weekly_score")
     private Integer score;
-    private LocalDateTime lastUpdated;
+    private OffsetDateTime lastUpdated;
 }

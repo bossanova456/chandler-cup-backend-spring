@@ -4,26 +4,36 @@ import com.chandlercup.dto.MatchupDTO;
 import com.chandlercup.dto.MatchupScoreDTO;
 import com.chandlercup.model.Matchup;
 import com.chandlercup.model.Team;
-import com.chandlercup.repository.MatchupRepository;
-import com.chandlercup.repository.TeamRepository;
+import com.chandlercup.repository.*;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.chandlercup.supplier.LocalDateTimeSupplier;
+import com.chandlercup.supplier.OffsetDateTimeSupplier;
+import com.chandlercup.testdata.MockMatchupRepository;
+import com.chandlercup.testdata.MockTeamRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+// TODO: Add tests for exception handling, scoring updates
+
 public class MatchupServiceTest {
+    private OffsetDateTimeSupplier offsetDateTimeSupplier;
+    private OffsetDateTime updateDateTime;
     private MatchupRepository matchupRepository;
+    private PickRepository pickRepository;
+    private UserRepository userRepository;
+    private WeeklyScoreRepository weeklyScoreRepository;
+    private SeasonScoreRepository seasonScoreRepository;
     private TeamRepository teamRepository;
     private MatchupService matchupService;
-    private LocalDateTimeSupplier localDateTimeSupplier;
-    private LocalDateTime updateDateTime;
+    private ScoreService scoreService;
     private Team favoredTeam;
     private Team underdogTeam;
     private Matchup expectedMatchup;
@@ -32,36 +42,24 @@ public class MatchupServiceTest {
     public void setup() {
         matchupRepository = mock(MatchupRepository.class);
         teamRepository = mock(TeamRepository.class);
-        localDateTimeSupplier = mock(LocalDateTimeSupplier.class);
-        matchupService = spy(new MatchupService(matchupRepository, teamRepository, localDateTimeSupplier));
+        pickRepository = mock(PickRepository.class);
+        userRepository = mock(UserRepository.class);
+        weeklyScoreRepository = mock(WeeklyScoreRepository.class);
+        seasonScoreRepository = mock(SeasonScoreRepository.class);
+        offsetDateTimeSupplier = mock(OffsetDateTimeSupplier.class);
+        scoreService = spy(new ScoreService(weeklyScoreRepository, seasonScoreRepository, matchupRepository, pickRepository, userRepository, offsetDateTimeSupplier));
+        matchupService = spy(new MatchupService(matchupRepository, teamRepository, scoreService, offsetDateTimeSupplier));
 
-        favoredTeam = Team.builder()
-            .teamId(1L)
-            .teamName("Team 1")
-            .teamRegion("City 1")
-            .build();
+        favoredTeam = MockTeamRepository.getFavoredTeam();
+        underdogTeam = MockTeamRepository.getUnderdogTeam();
 
-        underdogTeam = Team.builder()
-            .teamId(2L)
-            .teamName("Team 2")
-            .teamRegion("City 2")
-            .build();
+        updateDateTime = OffsetDateTime.now();
+        when(offsetDateTimeSupplier.get()).thenReturn(updateDateTime);
 
-        updateDateTime = LocalDateTime.now();
-        when(localDateTimeSupplier.get()).thenReturn(updateDateTime);
+        expectedMatchup = MockMatchupRepository.getMatchup(favoredTeam, underdogTeam, updateDateTime);
 
-        expectedMatchup = Matchup.builder()
-            .matchupLine(1.5)
-            .matchupStart(updateDateTime)
-            .matchupWeek("1")
-            .favoredTeam(favoredTeam)
-            .underdogTeam(underdogTeam)
-            .lastUpdated(updateDateTime)
-            .isFinal(false)
-            .build();
-
-        when(teamRepository.findById(1L)).thenReturn(Optional.of(favoredTeam));
-        when(teamRepository.findById(2L)).thenReturn(Optional.of(underdogTeam));
+        when(teamRepository.findById(favoredTeam.getTeamId())).thenReturn(Optional.of(favoredTeam));
+        when(teamRepository.findById(underdogTeam.getTeamId())).thenReturn(Optional.of(underdogTeam));
         when(matchupRepository.findById(any())).thenReturn(Optional.of(expectedMatchup));
     }
 
@@ -71,6 +69,7 @@ public class MatchupServiceTest {
             .builder()
             .matchupLine(1.5)
             .matchupStart(updateDateTime)
+            .seasonYear("2023")
             .seasonWeek("1")
             .favoredTeamId(1L)
             .underdogTeamId(2L)
@@ -90,6 +89,7 @@ public class MatchupServiceTest {
             .matchupLine(3.0)
             .matchupStart(updateDateTime)
             .seasonWeek("1")
+            .seasonYear("2023")
             .favoredTeamId(1L)
             .underdogTeamId(2L)
             .favoredTeamScore(10)

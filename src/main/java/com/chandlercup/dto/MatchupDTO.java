@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 @Builder
@@ -18,7 +18,7 @@ public class MatchupDTO {
     private Long favoredTeamId;
     private Long underdogTeamId;
     private Double matchupLine;
-    private LocalDateTime matchupStart;
+    private OffsetDateTime matchupStart;
     private Integer favoredTeamScore;
     private Integer underdogTeamScore;
     private String lastUpdated;

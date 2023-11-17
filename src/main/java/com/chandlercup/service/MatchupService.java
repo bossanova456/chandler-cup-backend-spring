@@ -8,7 +8,7 @@ import com.chandlercup.model.Matchup;
 import com.chandlercup.model.Team;
 import com.chandlercup.repository.MatchupRepository;
 import com.chandlercup.repository.TeamRepository;
-import com.chandlercup.supplier.LocalDateTimeSupplier;
+import com.chandlercup.supplier.OffsetDateTimeSupplier;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,11 +16,11 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-
 public class MatchupService {
     private final MatchupRepository matchupRepository;
     private final TeamRepository teamRepository;
-    private final LocalDateTimeSupplier localDateTimeSupplier;
+    private final ScoreService scoreService;
+    private final OffsetDateTimeSupplier offsetDateTimeSupplier;
 
     public Matchup addMatchup(MatchupDTO matchupDto) {
         Matchup matchup =
@@ -31,13 +31,13 @@ public class MatchupService {
                 .seasonWeek(matchupDto.getSeasonWeek())
                 .favoredTeam(
                         teamRepository.findById(matchupDto.getFavoredTeamId())
-                                .orElseThrow(() -> new TeamNotFoundException("Could not find favored team"))
+                                .orElseThrow(() -> new TeamNotFoundException("Could not find favored team with ID " + matchupDto.getFavoredTeamId()))
                 )
                 .underdogTeam(
                         teamRepository.findById(matchupDto.getUnderdogTeamId())
-                                .orElseThrow(() -> new TeamNotFoundException("Could not find underdog team"))
+                                .orElseThrow(() -> new TeamNotFoundException("Could not find underdog team with ID " + matchupDto.getFavoredTeamId()))
                 )
-                .lastUpdated(localDateTimeSupplier.get())
+                .lastUpdated(offsetDateTimeSupplier.get())
                 .build();
 
         return matchupRepository.save(matchup);
@@ -63,9 +63,15 @@ public class MatchupService {
         matchupToUpdate.setFavoredTeamScore(matchupDto.getFavoredTeamScore());
         matchupToUpdate.setUnderdogTeamScore(matchupDto.getUnderdogTeamScore());
         matchupToUpdate.setFinal(matchupDto.isFinal());
-        matchupToUpdate.setLastUpdated(localDateTimeSupplier.get());
+        matchupToUpdate.setLastUpdated(offsetDateTimeSupplier.get());
 
-        return matchupRepository.save(matchupToUpdate);
+        Matchup updatedMatchup = matchupRepository.save(matchupToUpdate);
+
+        // Update scores
+        scoreService.updateWeeklyScores(matchupDto.getSeasonYear(), matchupDto.getSeasonWeek(), false);
+        scoreService.updateSeasonScoresForAllUsers(matchupDto.getSeasonYear(), false);
+
+        return updatedMatchup;
     }
 
     public Matchup updateMatchupScore(Long matchupId, MatchupScoreDTO matchupScoreDTO) {
@@ -83,17 +89,29 @@ public class MatchupService {
         matchup.setFavoredTeamScore(favoredTeamScore);
         matchup.setUnderdogTeamScore(underdogTeamScore);
         matchup.setFinal(isFinal);
-        matchup.setLastUpdated(localDateTimeSupplier.get());
+        matchup.setLastUpdated(offsetDateTimeSupplier.get());
 
-        return matchupRepository.save(matchup);
+        Matchup updatedMatchup = matchupRepository.save(matchup);
+
+        // Update score
+        scoreService.updateWeeklyScores(matchup.getSeasonYear(), matchup.getSeasonWeek(), false);
+        scoreService.updateSeasonScoresForAllUsers(matchup.getSeasonYear(), false);
+
+        return updatedMatchup;
     }
 
     public Matchup updateMatchupFinal(Long matchupId, boolean isFinal) {
         Matchup matchupToUpdate = matchupRepository.findById(matchupId).orElseThrow(() -> new MatchupNotFoundException("Could not find matchup with ID " + matchupId));
 
         matchupToUpdate.setFinal(isFinal);
-        matchupToUpdate.setLastUpdated(localDateTimeSupplier.get());
+        matchupToUpdate.setLastUpdated(offsetDateTimeSupplier.get());
 
-        return matchupRepository.save(matchupToUpdate);
+        Matchup updatedMatchup = matchupRepository.save(matchupToUpdate);
+
+        // Update score
+        scoreService.updateWeeklyScores(matchupToUpdate.getSeasonYear(), matchupToUpdate.getSeasonWeek(), false);
+        scoreService.updateSeasonScoresForAllUsers(matchupToUpdate.getSeasonYear(), false);
+
+        return updatedMatchup;
     }
 }

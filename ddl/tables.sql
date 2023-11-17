@@ -24,7 +24,7 @@ CREATE TABLE matchups (
     season_week TEXT NOT NULL,
     favored_team_id BIGINT NOT NULL,
     underdog_team_id BIGINT NOT NULL,
-    matchup_line INT NOT NULL,
+    matchup_line DECIMAL NOT NULL,
     favored_team_score INT,
     underdog_team_score INT,
     matchup_start TIMESTAMP NOT NULL,
@@ -50,11 +50,6 @@ CREATE TABLE picks (
        REFERENCES matchups (matchup_id),
     FOREIGN KEY (pick_team_id)
        REFERENCES teams (team_id)
-);
-
-CREATE TABLE seasons (
-    season_id SERIAL PRIMARY KEY NOT NULL,
-    season_year BIGINT NOT NULL
 );
 
 CREATE TABLE weekly_scores (
@@ -129,4 +124,67 @@ INSERT INTO teams (team_name, team_region) VALUES ('Commanders', 'Washington');
 INSERT INTO teams (team_name, team_region) VALUES ('Cardinals', 'Arizona');
 
 INSERT INTO matchups (season_year, season_week, favored_team_id, underdog_team_id, matchup_line, favored_team_score, underdog_team_score, matchup_start, last_updated, is_final)
-    VALUES ('1', '2023', 1, 2, 3.5, 7, 10, TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'), TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'), false);
+    VALUES ('2023', '1', 15, 10, 4.0, 20, 21, TO_TIMESTAMP('2023-09-07 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'), true);
+INSERT INTO matchups (season_year, season_week, favored_team_id, underdog_team_id, matchup_line, favored_team_score, underdog_team_score, matchup_start, last_updated, is_final)
+    VALUES ('2023', '1', 31, 32, 7.0, 20, 16, TO_TIMESTAMP('2023-09-07 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'), true);
+INSERT INTO matchups (season_year, season_week, favored_team_id, underdog_team_id, matchup_line, favored_team_score, underdog_team_score, matchup_start, last_updated, is_final)
+    VALUES ('2023', '1', 1, 4, 3.5, 24, 10, TO_TIMESTAMP('2023-09-07 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'), true);
+INSERT INTO matchups (season_year, season_week, favored_team_id, underdog_team_id, matchup_line, favored_team_score, underdog_team_score, matchup_start, last_updated, is_final)
+    VALUES ('2023', '1', 6, 7, 2, 3, 24, TO_TIMESTAMP('2023-09-07 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'), true);
+INSERT INTO matchups (season_year, season_week, favored_team_id, underdog_team_id, matchup_line, favored_team_score, underdog_team_score, matchup_start, last_updated, is_final)
+    VALUES ('2023', '1', 2, 12, 9.5, 25, 9, TO_TIMESTAMP('2023-09-07 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'), true);
+INSERT INTO matchups (season_year, season_week, favored_team_id, underdog_team_id, matchup_line, favored_team_score, underdog_team_score, matchup_start, last_updated, is_final)
+    VALUES ('2023', '1', 14, 13, 4.5, 31, 21, TO_TIMESTAMP('2023-09-07 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'), true);
+INSERT INTO matchups (season_year, season_week, favored_team_id, underdog_team_id, matchup_line, favored_team_score, underdog_team_score, matchup_start, last_updated, is_final)
+    VALUES ('2023', '1', 27, 26, 2.0, 30, 7, TO_TIMESTAMP('2023-09-07 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'), true);
+INSERT INTO matchups (season_year, season_week, favored_team_id, underdog_team_id, matchup_line, favored_team_score, underdog_team_score, matchup_start, last_updated, is_final)
+    VALUES ('2023', '1', 19, 29, 4.5, 17, 20, TO_TIMESTAMP('2023-09-07 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'), true);
+INSERT INTO matchups (season_year, season_week, favored_team_id, underdog_team_id, matchup_line, favored_team_score, underdog_team_score, matchup_start, last_updated, is_final)
+    VALUES ('2023', '1', 21, 30, 2.5, 16, 15, TO_TIMESTAMP('2023-09-07 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'), true);
+INSERT INTO matchups (season_year, season_week, favored_team_id, underdog_team_id, matchup_line, favored_team_score, underdog_team_score, matchup_start, last_updated, is_final)
+    VALUES ('2023', '1', 5, 11, 1.5, 20, 38, TO_TIMESTAMP('2023-09-07 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'), true);
+INSERT INTO matchups (season_year, season_week, favored_team_id, underdog_team_id, matchup_line, favored_team_score, underdog_team_score, matchup_start, last_updated, is_final)
+    VALUES ('2023', '1', 28, 17, 5, 13, 30, TO_TIMESTAMP('2023-09-07 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'), true);
+INSERT INTO matchups (season_year, season_week, favored_team_id, underdog_team_id, matchup_line, favored_team_score, underdog_team_score, matchup_start, last_updated, is_final)
+    VALUES ('2023', '1', 9, 24, 3, 16, 17, TO_TIMESTAMP('2023-09-07 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'), true);
+INSERT INTO matchups (season_year, season_week, favored_team_id, underdog_team_id, matchup_line, favored_team_score, underdog_team_score, matchup_start, last_updated, is_final)
+    VALUES ('2023', '1', 16, 18, 3, 34, 36, TO_TIMESTAMP('2023-09-07 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'), true);
+INSERT INTO matchups (season_year, season_week, favored_team_id, underdog_team_id, matchup_line, favored_team_score, underdog_team_score, matchup_start, last_updated, is_final)
+    VALUES ('2023', '1', 25, 20, 3.5, 25, 20, TO_TIMESTAMP('2023-09-07 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'), true);
+INSERT INTO matchups (season_year, season_week, favored_team_id, underdog_team_id, matchup_line, favored_team_score, underdog_team_score, matchup_start, last_updated, is_final)
+    VALUES ('2023', '1', 8, 22, 3, 40, 0, TO_TIMESTAMP('2023-09-07 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'), true);
+INSERT INTO matchups (season_year, season_week, favored_team_id, underdog_team_id, matchup_line, favored_team_score, underdog_team_score, matchup_start, last_updated, is_final)
+    VALUES ('2023', '1', 3, 23, 2.5, 16, 22, TO_TIMESTAMP('2023-09-07 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'), true);
+
+INSERT INTO picks (user_id, season_year, season_week, matchup_id, pick_team_id, last_updated)
+    VALUES (1, '2023', '1', 1, 15, TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'));
+INSERT INTO picks (user_id, season_year, season_week, matchup_id, pick_team_id, last_updated)
+    VALUES (1, '2023', '1', 2, 32, TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'));
+INSERT INTO picks (user_id, season_year, season_week, matchup_id, pick_team_id, last_updated)
+    VALUES (1, '2023', '1', 3, 1, TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'));
+INSERT INTO picks (user_id, season_year, season_week, matchup_id, pick_team_id, last_updated)
+    VALUES (1, '2023', '1', 4, 6, TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'));
+INSERT INTO picks (user_id, season_year, season_week, matchup_id, pick_team_id, last_updated)
+    VALUES (1, '2023', '1', 5, 2, TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'));
+INSERT INTO picks (user_id, season_year, season_week, matchup_id, pick_team_id, last_updated)
+    VALUES (1, '2023', '1', 6, 14, TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'));
+INSERT INTO picks (user_id, season_year, season_week, matchup_id, pick_team_id, last_updated)
+    VALUES (1, '2023', '1', 7, 27, TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'));
+INSERT INTO picks (user_id, season_year, season_week, matchup_id, pick_team_id, last_updated)
+    VALUES (1, '2023', '1', 8, 19, TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'));
+INSERT INTO picks (user_id, season_year, season_week, matchup_id, pick_team_id, last_updated)
+    VALUES (1, '2023', '1', 9, 30, TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'));
+INSERT INTO picks (user_id, season_year, season_week, matchup_id, pick_team_id, last_updated)
+    VALUES (1, '2023', '1', 10, 5, TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'));
+INSERT INTO picks (user_id, season_year, season_week, matchup_id, pick_team_id, last_updated)
+    VALUES (1, '2023', '1', 11, 28, TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'));
+INSERT INTO picks (user_id, season_year, season_week, matchup_id, pick_team_id, last_updated)
+    VALUES (1, '2023', '1', 12, 9, TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'));
+INSERT INTO picks (user_id, season_year, season_week, matchup_id, pick_team_id, last_updated)
+    VALUES (1, '2023', '1', 13, 18, TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'));
+INSERT INTO picks (user_id, season_year, season_week, matchup_id, pick_team_id, last_updated)
+    VALUES (1, '2023', '1', 14, 25, TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'));
+INSERT INTO picks (user_id, season_year, season_week, matchup_id, pick_team_id, last_updated)
+    VALUES (1, '2023', '1', 15, 22, TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'));
+INSERT INTO picks (user_id, season_year, season_week, matchup_id, pick_team_id, last_updated)
+    VALUES (1, '2023', '1', 16, 3, TO_TIMESTAMP('2023-11-11 04:00:00', 'YYYY-MM-DD HH:MI:SS'));

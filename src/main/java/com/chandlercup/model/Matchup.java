@@ -3,7 +3,7 @@ package com.chandlercup.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 @Builder
@@ -28,8 +28,8 @@ public class Matchup {
     private Double matchupLine;
     private Integer favoredTeamScore;
     private Integer underdogTeamScore;
-    private LocalDateTime matchupStart;
-    private LocalDateTime lastUpdated;
+    private OffsetDateTime matchupStart;
+    private OffsetDateTime lastUpdated;
     private boolean isFinal;
 
 }

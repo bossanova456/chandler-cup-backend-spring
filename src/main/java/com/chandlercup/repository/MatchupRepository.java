@@ -9,6 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface MatchupRepository extends JpaRepository<Matchup, Long> {
-    // TODO: should return optional?
     Optional<List<Matchup>> findMatchupsBySeasonYearAndSeasonWeek(String seasonYear, String seasonWeek);
 }
