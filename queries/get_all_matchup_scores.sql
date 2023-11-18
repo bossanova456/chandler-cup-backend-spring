@@ -17,4 +17,6 @@ SELECT
 FROM users u, picks p, matchups m
 WHERE u.user_id = p.user_id
   AND p.matchup_id = m.matchup_id
+  AND u.user_id = 1
+  AND m.season_week = '2'
 ORDER BY m.matchup_id
